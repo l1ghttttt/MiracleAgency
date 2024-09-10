@@ -1,6 +1,6 @@
 import React from "react";
 import {motion} from "framer-motion";
-import Manage from "@/components/manage/Manage";
+import Manage from "@/components/Manage/Manage";
 import Develop from "@/components/Develop/Develop";
 import Design from "@/components/Design/Design";
 

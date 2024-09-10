@@ -7,13 +7,16 @@ import Marquee from "@/components/Marquee/Marquee";
 import useStore from "@/Store";
 
 const ContinueManage = () => {
-    const zoom= useStore((state:any)=> state.zoom);
+
+    const zoom = useStore((state:any)=> state.zoom)
     const content= useStore((state:any)=> state.Content);
     const [show, setShow] = React.useState<boolean>(true);
     const router = useRouter();
     const [delay, setDelay] = React.useState<number>(1);
     setTimeout(() => {setDelay(0)}, 1000)
-    const toggleZoom= useStore((state:any)=> state.toggleZoom);
+    const toggleZoom = useStore((state:any)=> state.toggleZoom);
+    const toggleOut = useStore((state:any)=> state.toggleOut);
+
     return (
         <>
             <Marquee show={show} delay={delay} content={content}/>
@@ -33,8 +36,10 @@ const ContinueManage = () => {
                             className={`hoverEffectArrow duration-500 pb-[20px]`}
                             onClick={() => {
                                 setShow(false)
+                                toggleOut(false)
                                 setTimeout(() => {
                                     router.push("/#catalog")
+                                    toggleOut(true)
                                 }, 1000)
                                 toggleZoom(false)
                             }}

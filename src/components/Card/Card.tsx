@@ -17,6 +17,8 @@ const Card: React.FC<CardProps> = ({ title, id }) => {
     const [scale2, setScale2] = React.useState<boolean>(false);
     const [scale100, setScale100] = React.useState<boolean>(false);
     const [isMarqueePaused, setIsMarqueePaused] = React.useState<boolean>(false);
+    const isOut = useStore((state:any)=> state.isOut);
+    const [out, setOut] = React.useState<boolean>(false);
     const toggleZoom = useStore((state: any) => state.toggleZoom);
     const togglePause = useStore((state: any) => state.togglePause);
     const zoom = useStore((state: any) => state.zoom);
@@ -46,12 +48,12 @@ const Card: React.FC<CardProps> = ({ title, id }) => {
     if (scale2 && portalRoot) {
         return ReactDOM.createPortal(
             <AnimatePresence>
-                {scale2 && (
+                {scale2 && !out && isOut && (
                     <motion.div
-                        initial={{ transform: `translate(-50%, -50%) scale(0)`, opacity: 0 }}
+                        initial={{ transform: `translate(-50%, 25%) scale(1.2)`, opacity: 0 }}
                         animate={{ transform: `translate(-50%, -50%) scale(2)`, opacity: 1 }}
-                        exit={{ transform: `translate(-50%, -50%) scale(0)`, opacity: 0 }}
-                        transition={{ duration: 1 }}
+                        exit={{ transform: `translate(-50%, 25%) scale(1.2)`, opacity: 0 }}
+                        transition={{ duration: 0.5 }}
                         key={id}
                         onClick={() => {
                             if (!zoom) {
@@ -66,11 +68,15 @@ const Card: React.FC<CardProps> = ({ title, id }) => {
                         <div
                             className={`absolute top-0 left-0 bg-[#000000] rounded-br-full w-[40px] h-[40px] pl-[5px] pt-[7px] hover:w-[45px] hover:h-[45px] hover:pl-[8px] hover:pt-[10px] duration-200`}>
                             <Image src={`/arrowleftbold.svg`} alt={``} width={`25`} height={`10`} onClick={() => {
-                                setScale1(false);
-                                setScale2(false);
-                                toggleZoom(false);
-                                setScale100(false);
-                                togglePause(false);
+                                setOut(true);
+                                setTimeout(() => {
+                                    setScale1(false)
+                                    toggleZoom(false);
+                                    setScale100(false);
+                                    togglePause(false);
+                                    setScale2(false)
+                                    setOut(false);
+                                }, 500)
                             }} />
                         </div>
                     </motion.div>

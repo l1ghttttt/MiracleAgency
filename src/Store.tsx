@@ -129,6 +129,8 @@ const useStore = create((set) => ({
     toggleZoom: (target:boolean) => set({ zoom: target }),
     pause: false,
     togglePause: (target:boolean) => set({ pause: target }),
+    isOut: true,
+    toggleOut: (target:boolean) => set({ isOut: target }),
 }))
 
 export default useStore;
